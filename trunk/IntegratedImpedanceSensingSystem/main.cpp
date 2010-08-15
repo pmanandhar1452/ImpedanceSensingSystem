@@ -1,3 +1,8 @@
+/*
+ * Created on: Aug 11, 2010
+ *      Author: Prakash Manandhar
+ */
+
 #include "integratedimpedancesensingsystem.h"
 
 #include <QtGui>
