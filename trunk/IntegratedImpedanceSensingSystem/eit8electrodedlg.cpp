@@ -332,14 +332,14 @@ void EIT8ElectrodeDlg::writeMATLABCode()
             int imagI = realI + 1;
             switch(cI.value(i).Type) {
             case ChannelInformation::CT_CARRIER:
-                    tStr = QString("V  = imp(%1,:)' + j*imp(%2,:)';\n")
+                    tStr = QString("V  = imp(%1,:)' + 1i*imp(%2,:)';\n")
                                     .arg(realI).arg(imagI);
                     fileI.write(tStr.toAscii());
                     break;
             case ChannelInformation::CT_IMPEDANCE:
             case ChannelInformation::CT_DC_VOLTS:
             case ChannelInformation::CT_AC_VOLTS:
-                    tStr = QString("Z = [Z (imp(%1,:)' + j*imp(%2,:)')];\n")
+                    tStr = QString("Z = [Z (imp(%1,:)' + 1i*imp(%2,:)')];\n")
                                     .arg(realI).arg(imagI);
                     fileI.write(tStr.toAscii());
                     break;
