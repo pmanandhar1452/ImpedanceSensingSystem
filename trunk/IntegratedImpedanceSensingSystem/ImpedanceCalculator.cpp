@@ -96,18 +96,21 @@ void ImpedanceCalculator::calculateBasis()
 
 void ImpedanceCalculator::calculateCarrier()
 {
-	for (int c = 0; c < cInf.size(); c++)
-	{
-		if (cInf.value(c).Type == ChannelInformation::CT_CARRIER)
-		{
-			carrierChannel = c;
-			double x[L];
-			gatherData(x, L, c);
-			substractMean(x, L);
-			Vc = sumBasis(x, L);
-			break;
-		}
-	}
+    for (int c = 0; c < cInf.size(); c++)
+    {
+        if (cInf.value(c).Type == ChannelInformation::CT_CARRIER)
+        {
+                carrierChannel = c;
+                double x[L];
+                gatherData(x, L, c);
+//                for (int i = 0; i < L; i++)
+//                    qDebug() << "x[<< " << i << "] = " << x[i];
+                substractMean(x, L);
+                Vc = sumBasis(x, L);
+                //qDebug() << "Vc = " << abs(Vc);
+                break;
+        }
+    }
 }
 
 double ImpedanceCalculator::getData(int c, int ti)

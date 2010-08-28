@@ -44,14 +44,15 @@ private:
     static const int NUM_CHANNELS = EIT8ElectrodeDlg::N_ELECTRODES + 1;
     static const int BOARD_NUM = 0;
 
-
-
     void cleanup();
 
     bool createSweepErrorMsg (int ci, int si, QString);
     bool measureStep(int ns, int fi);
     bool initAcquisitionCard();
     bool initSwitchMatrix();
+
+    bool closeSwitch(int si);
+    bool openSwitch(int si);
 
     Global * g;
 
@@ -71,8 +72,10 @@ private:
     const QString swMatID, siGenID;
     ViSession defaultRM, viSwMat, viSiGen;
 
-    static const char * CMD_SWITCH_CLOSE[NUM_CHANNELS];
-    static const char * CMD_SWITCH_OPEN[NUM_CHANNELS];
+    static const char * CMD_SWITCH_CLOSE[EIT8ElectrodeDlg::N_ELECTRODES_ACTIVE];
+    static const char * CMD_SWITCH_OPEN [EIT8ElectrodeDlg::N_ELECTRODES_ACTIVE];
+    static const char * CMD_SWITCH_CLOSE_TEST[EIT8ElectrodeDlg::N_ELECTRODES_ACTIVE];
+    static const char * CMD_SWITCH_OPEN_TEST [EIT8ElectrodeDlg::N_ELECTRODES_ACTIVE];
 };
 
 #endif // EITMEASUREMENTTHREAD_H

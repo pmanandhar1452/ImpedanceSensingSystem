@@ -113,6 +113,7 @@ bool MeasurementThread::initAcquisitionCard ()
 		_ChanArray[i] = cInfo.value(i).ChannelNumber;
 		_ChanTypeArray[i] = ANALOG;
                 _GainArray[i] = Global::vMaxToGain(cInfo.value(i).Units);
+
 	}
 	return true;
 }

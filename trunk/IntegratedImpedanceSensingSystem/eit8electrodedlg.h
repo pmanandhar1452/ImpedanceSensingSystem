@@ -25,8 +25,9 @@ public:
     double getCycleTime (); // calculates the time per cycle in seconds
     double getSweepTime (); // sweep time of impedance calculator in seconds
 
-    static const int SWITCHING_DELAY = 50; // switch matrix switching delay in ms
-    static const int N_ELECTRODES = 8;
+    static const int SWITCHING_DELAY = 10; // switch matrix switching delay in ms
+    static const int N_ELECTRODES = 12;
+    static const int N_ELECTRODES_ACTIVE = 8;
     static const ChannelInformation::DAQ_SCALING V_MAX = ChannelInformation::DAQPM_500mV;
 
     QList<ImpedanceMeasurement> * getImpMeasurement();

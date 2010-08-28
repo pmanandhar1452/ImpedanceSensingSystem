@@ -17,7 +17,7 @@ void EITMeasurementLoop::measure()
         finishedSteps = 0;
         estimatedTimeRemaining = ((EIT8ElectrodeDlg*)exp)->getTotalTime();
         Global *g = Global::instance();
-        totalSteps = pEITExp->N_ELECTRODES * g->getEITExpCycles();
+        totalSteps = pEITExp->N_ELECTRODES_ACTIVE * g->getEITExpCycles();
         pDlg.setMaximum(totalSteps);
         EITMeasurementThread thread(this, (EIT8ElectrodeDlg*)exp);
         connect(&pDlg, SIGNAL(cancelled()), &thread, SLOT(cancel()));
