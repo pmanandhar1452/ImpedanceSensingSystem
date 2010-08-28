@@ -212,7 +212,7 @@ double EIT8ElectrodeDlg::getCycleTime()
 {
     return (ui->spnOnTime->value() + ui->spnOffTime->value()
             + 2*SWITCHING_DELAY
-            )*N_ELECTRODES/1000.0;
+            )*N_ELECTRODES_ACTIVE/1000.0;
 }
 
 double EIT8ElectrodeDlg::getTotalTime()
@@ -235,7 +235,7 @@ void EIT8ElectrodeDlg::createChannelInformationVector() {
     for (int i = 0; i < N_ELECTRODES + 1; i++) {
 
         cI[i].ChannelNumber = i;
-        cI[i].Units = ChannelInformation::DAQPM_500mV;
+        cI[i].Units = V_MAX;
         if (i == 0)
             cI[i].Type = ChannelInformation::CT_CARRIER;
         else
@@ -253,7 +253,7 @@ bool EIT8ElectrodeDlg::writeSettings()
     QTextStream stream(&xmlF);
     QDomElement root = qDom.createElement("Experiment");
     root.setAttribute("Type", "EIT_8_Electrode");
-    root.setAttribute("Version", "0.1");
+    root.setAttribute("Version", "0.2");
     root.setAttribute("SamplingFrequency_Hz", global->getEITSamplingFreq());
     root.setAttribute("ExcitationFrequency_Hz", global->getFrequencyStart());
     root.setAttribute("Amplitude_mV", global->getAmplitude());
@@ -332,14 +332,14 @@ void EIT8ElectrodeDlg::writeMATLABCode()
             int imagI = realI + 1;
             switch(cI.value(i).Type) {
             case ChannelInformation::CT_CARRIER:
-                    tStr = QString("V  = imp(%1,:)' + 1i*imp(%2,:)';\n")
+                    tStr = QString("V  = imp(%1,:)' + j*imp(%2,:)';\n")
                                     .arg(realI).arg(imagI);
                     fileI.write(tStr.toAscii());
                     break;
             case ChannelInformation::CT_IMPEDANCE:
             case ChannelInformation::CT_DC_VOLTS:
             case ChannelInformation::CT_AC_VOLTS:
-                    tStr = QString("Z = [Z (imp(%1,:)' + 1i*imp(%2,:)')];\n")
+                    tStr = QString("Z = [Z (imp(%1,:)' + j*imp(%2,:)')];\n")
                                     .arg(realI).arg(imagI);
                     fileI.write(tStr.toAscii());
                     break;

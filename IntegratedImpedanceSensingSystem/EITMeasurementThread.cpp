@@ -39,6 +39,28 @@ const char * EITMeasurementThread::CMD_SWITCH_OPEN[] = {
        "ROUT:OPEN (@308)\n"
    };
 
+const char * EITMeasurementThread::CMD_SWITCH_CLOSE_TEST[] = {
+       "ROUT:CLOS? (@101)\n",
+       "ROUT:CLOS? (@302)\n",
+       "ROUT:CLOS? (@103)\n",
+       "ROUT:CLOS? (@304)\n",
+       "ROUT:CLOS? (@105)\n",
+       "ROUT:CLOS? (@306)\n",
+       "ROUT:CLOS? (@107)\n",
+       "ROUT:CLOS? (@308)\n"
+   };
+
+const char * EITMeasurementThread::CMD_SWITCH_OPEN_TEST[] = {
+       "ROUT:OPEN? (@101)\n",
+       "ROUT:OPEN? (@302)\n",
+       "ROUT:OPEN? (@103)\n",
+       "ROUT:OPEN? (@304)\n",
+       "ROUT:OPEN? (@105)\n",
+       "ROUT:OPEN? (@306)\n",
+       "ROUT:OPEN? (@107)\n",
+       "ROUT:OPEN? (@308)\n"
+   };
+
 
 EITMeasurementThread::EITMeasurementThread
     (EITMeasurementLoop * ml, EIT8ElectrodeDlg * exp)
@@ -67,7 +89,7 @@ void EITMeasurementThread::run() {
     for (int ci = 0; ci < g->getEITExpCycles(); ci++)
     {
             bool response;
-            for (int si = 0; si < exp->N_ELECTRODES; si++)
+            for (int si = 0; si < exp->N_ELECTRODES_ACTIVE; si++)
             {
                 emit updateProg();
                 response = measureStep(ci, si);
@@ -81,7 +103,7 @@ void EITMeasurementThread::run() {
 
 bool EITMeasurementThread::measureStep(int ci, int si)
 {
-
+    bool swMatSuccess;
     int e_code;
     e_code = cbALoadQueue (BOARD_NUM, _ChanArray, _GainArray, NUM_CHANNELS);
     if (e_code != 0) {
@@ -89,16 +111,23 @@ bool EITMeasurementThread::measureStep(int ci, int si)
             cbWinBufFree(_data); return response;
     }
     long actualSamplingRate = fsamp;
-    viPrintf (viSwMat, (ViString)CMD_SWITCH_CLOSE[si]);
-    this->msleep(exp->SWITCHING_DELAY);
+    swMatSuccess = closeSwitch(si);
+    if (!swMatSuccess) {
+            bool response = createSweepErrorMsg(ci, si, "Switch matrix error!!!");
+            cbWinBufFree(_data); return response;
+    }
     //qDebug() << "Starting Scan " << NUM_CHANNELS << " Chans, Buffer Size: " << DATA_BUF_SIZE
     //        << ", Sampling Rate: " << fsamp;
     int startTime = LoggerTime::timer();
     e_code = cbAInScan (BOARD_NUM, 0, 15, DATA_BUF_SIZE, &actualSamplingRate,
                             _GainArray[0], _data, CONVERTDATA + DMAIO);
     int endTime = LoggerTime::timer();
-    viPrintf (viSwMat, (ViString)CMD_SWITCH_OPEN[si]);
-    this->msleep(exp->SWITCHING_DELAY);
+
+    swMatSuccess = openSwitch(si);
+    if (!swMatSuccess) {
+            bool response = createSweepErrorMsg(ci, si, "Switch matrix error!!!");
+            cbWinBufFree(_data); return response;
+    }
     //qDebug() << "Ending Scan";
     if (e_code != 0) {
             bool response = createSweepErrorMsg(ci, si, "Error in cbInScan()");
@@ -131,6 +160,7 @@ bool EITMeasurementThread::initAcquisitionCard ()
         _ChanArray[i] = i;
         _ChanTypeArray[i] = ANALOG;
         _GainArray[i] = Global::vMaxToGain(exp->V_MAX);
+        //qDebug() << "GainArray[" << i << "] = " << _GainArray[i];
     }
     return true;
 }
@@ -185,4 +215,36 @@ bool EITMeasurementThread::createSweepErrorMsg(int ci, int si, QString mes)
                         QMessageBox::Abort|QMessageBox::Ok);
         if (res == QMessageBox::Abort) return false;
         return true;
+}
+
+bool EITMeasurementThread::closeSwitch(int si) {
+    char buf [1000] = {0};
+    viPrintf (viSwMat, (ViString)CMD_SWITCH_CLOSE[si]);
+    this->msleep(exp->SWITCHING_DELAY);
+
+    int test_count = 0;
+    while (test_count < 5) {
+        viPrintf (viSwMat, (ViString)CMD_SWITCH_CLOSE_TEST[si]);
+        viScanf (viSwMat, (ViString)"%t", &buf);
+        if (strlen(buf) == 0)   return false;
+        else if (buf[0] == '1') return true;
+        test_count++;
+    }
+    return false;
+}
+
+bool EITMeasurementThread::openSwitch(int si) {
+    char buf [1000] = {0};
+    viPrintf (viSwMat, (ViString)CMD_SWITCH_OPEN[si]);
+    this->msleep(exp->SWITCHING_DELAY);
+
+    int test_count = 0;
+    while (test_count < 5) {
+        viPrintf (viSwMat, (ViString)CMD_SWITCH_OPEN_TEST[si]);
+        viScanf (viSwMat, (ViString)"%t", &buf);
+        if (strlen(buf) == 0)   return false;
+        else if (buf[0] == '1') return true;
+        test_count++;
+    }
+    return false;
 }

@@ -287,7 +287,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QSpinBox" name="spnOnTime">
         <property name="maximum">
-         <number>5000</number>
+         <number>50000</number>
         </property>
        </widget>
       </item>
@@ -576,7 +576,7 @@ p, li { white-space: pre-wrap; }
          <double>0.010000000000000</double>
         </property>
         <property name="maximum">
-         <double>1000.000000000000000</double>
+         <double>10000.000000000000000</double>
         </property>
         <property name="value">
          <double>10.000000000000000</double>
@@ -738,7 +738,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QSpinBox" name="spnSamplingFreq">
         <property name="maximum">
-         <number>5000</number>
+         <number>20000</number>
         </property>
        </widget>
       </item>
