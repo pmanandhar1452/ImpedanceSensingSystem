@@ -528,30 +528,36 @@ void ImpRobotExp::writeMATLABCode()
 			"fid = fopen('Position.dat', 'r');\n"
 			"pos = fread(fid, [2 inf], 'long');\n"
 			"fclose(fid);\n"
-                        "tp = pos(1,:)';\n"
-			"p = pos(2,:)';\n"
+                        "if ~isempty(pos)\n"
+                        "   tp = pos(1,:)';\n"
+                        "   p = pos(2,:)';\n"
+                        "end\n"
 			"clear pos;\n"
 			"fid = fopen('Impedance.dat', 'r');\n"
 			"imp = fread(fid, [%1 inf], 'double');\n"
 			"fclose(fid);\n"
-			"t  = imp(1,:)';\n"
-			"fc = imp(2,:)';\n"
-			"fs = imp(3,:)';\n"
-			"Z  = [];\n"
+                        "t   = imp(1,:)';\n"
+                        "fc  = imp(2,:)';\n"
+                        "fs  = imp(3,:)';\n"
+                        "Z   = [];\n"
+                        "rsZ = [];"
 		).arg(cI.size()*3 + 3);
 	fileI.write(tStr.toAscii());
 	for (int i = 0; i < cI.size(); i++) {
 		int realI = 3*(i + 1) + 1;
 		int imagI = realI + 1;
+                int  resI = imagI + 1;
 		switch(cI.value(i).Type) {
 		case ChannelInformation::CT_CARRIER:
-			tStr = QString("V  = imp(%1,:)' + j*imp(%2,:)';\n")
+                        tStr = QString("V  = imp(%1,:)' + 1i*imp(%2,:)';\n")
 					.arg(realI).arg(imagI);
+                        tStr += QString("rsV  = imp(%1,:)';\n").arg(resI);
 			fileI.write(tStr.toAscii());
 			break;
 		case ChannelInformation::CT_IMPEDANCE:
-			tStr = QString("Z = [Z (imp(%1,:)' + j*imp(%2,:)')];\n")
+                        tStr = QString("Z = [Z (imp(%1,:)' + 1i*imp(%2,:)')];\n")
 					.arg(realI).arg(imagI);
+                        tStr += QString("rsZ = [rsZ imp(%1,:)'];\n").arg(resI);
 			fileI.write(tStr.toAscii());
 			break;
 		case ChannelInformation::CT_HUMIDITY:
