@@ -50,8 +50,9 @@ void ImpedanceCalculator::processChannel(int c, long L, ImpedanceMeasurement *m)
 		substractMean(x, L);
 		V = sumBasis(x, L);
 		absV = abs(V); angleV = arg(V);
-		angleV = angleV
-				- 2*M_PI*fc*(c - carrierChannel)/((double)(Nc)*fs);
+                angleV = angleV
+                         //- 2*M_PI*fc*(c - carrierChannel)/((double)(Nc)*fs);
+                         - 2*M_PI*fc*(c - carrierChannel)/((double)(Nc + 0.05)*fs);
 		//qDebug() << "Channel " << c << " [IMP]: " << absV << ", " << angleV;
 		V = std::polar(absV, angleV);
 		I = (Vc - V)/cI.SeriesR;
