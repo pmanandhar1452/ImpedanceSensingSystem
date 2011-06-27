@@ -22,6 +22,9 @@ MeasurementLoop::MeasurementLoop(ImpRobotExp * exp,
 		QList<ImpedanceMeasurement>* pIM)
         :AbstractMeasurementLoop(exp, pIM) { }
 
+MeasurementLoop::MeasurementLoop(SingleFreqImpDlg * exp,
+                QList<ImpedanceMeasurement>* pIM)
+        :AbstractMeasurementLoop(exp, pIM) { }
 
 void MeasurementLoop::measure()
 {

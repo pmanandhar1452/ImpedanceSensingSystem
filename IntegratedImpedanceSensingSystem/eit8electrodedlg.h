@@ -51,7 +51,7 @@ private:
 
 private slots:
     void selectDataFolder();
-    \
+
     void selectSMDeviceID();
     void selectSGDeviceID();
     void testSMAgConn();

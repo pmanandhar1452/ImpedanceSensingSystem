@@ -6,7 +6,8 @@ QT += core \
 CONFIG += console
 
 #PATH_SETTINGS_SET = COMPUTER_1
-PATH_SETTINGS_SET = COMPUTER_2
+#PATH_SETTINGS_SET = COMPUTER_2
+PATH_SETTINGS_SET = COMPUTER_3
 
 contains ( PATH_SETTINGS_SET, COMPUTER_1) {
     QEXTSERIALPORT_PATH = "C:/Documents and Settings/Instrument/My Documents/PManandhar/qextserialport"
@@ -16,12 +17,19 @@ contains ( PATH_SETTINGS_SET, COMPUTER_1) {
 
 contains ( PATH_SETTINGS_SET, COMPUTER_2) {
     QEXTSERIALPORT_PATH = "C:/EclipseWorkspace/qextserialport"
+    QEXTSERIALPORT_BUILD_PATH = $$QEXTSERIALPORT_PATH
     MCCDAQ_PATH = "C:/Users/Public/Documents/Measurement Computing/DAQ/C"
     VISA_PATH   = "C:/Program Files/IVI Foundation/VISA/Win64"
 }
 
+contains ( PATH_SETTINGS_SET, COMPUTER_3) {
+    QEXTSERIALPORT_PATH = "C:/qextserialport"
+    QEXTSERIALPORT_BUILD_PATH = "C:/qextserialport-build-desktop"
+    MCCDAQ_PATH = "C:/Users/Public/Documents/Measurement Computing/DAQ/C"
+    VISA_PATH   = "C:/Program Files/IVI Foundation/VISA/Win64"
+}
 
-LIBS        += $$QEXTSERIALPORT_PATH/src/build/libqextserialportd1.a
+LIBS        += $$QEXTSERIALPORT_BUILD_PATH/src/build/libqextserialportd1.a
 INCLUDEPATH += $$QEXTSERIALPORT_PATH/src
 INCLUDEPATH += $$VISA_PATH/Include
 INCLUDEPATH += $$MCCDAQ_PATH
@@ -38,7 +46,8 @@ HEADERS += LoggerTime.h ImpedanceCalculator.h \
     eit8electrodedlg.h \
     eitmeasurementloop.h \
     AbstractMeasurementLoop.h \
-    EITMeasurementThread.h
+    EITMeasurementThread.h \
+    singlefreqimpdlg.h
 SOURCES += LoggerTime.cpp ImpedanceCalculator.cpp \
     RobotControl.cpp MeasurementThread.cpp ChannelInformation.cpp \
     improbotexp.cpp ExperimentSettings.cpp \
@@ -48,8 +57,10 @@ SOURCES += LoggerTime.cpp ImpedanceCalculator.cpp \
     eit8electrodedlg.cpp \
     eitmeasurementloop.cpp \
     AbstractMeasurementLoop.cpp \
-    EITMeasurementThread.cpp
+    EITMeasurementThread.cpp \
+    singlefreqimpdlg.cpp
 FORMS += improbotexp.ui \
     integratedimpedancesensingsystem.ui MeasurementProgDlg.ui \
-    eit8electrodedlg.ui
+    eit8electrodedlg.ui \
+    singlefreqimpdlg.ui
 RESOURCES += 

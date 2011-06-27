@@ -54,13 +54,14 @@ void MeasurementThread::run() {
 
 bool MeasurementThread::measureStep(int ns, int fi)
 {
-    //qDebug() << "MeasurementStep: ns = " << ns << ", fi = " << fi;
-    char buf [1000] = {0};
-    QString strFreq = QString ("FREQ %1\n").arg(fList[fi]);
-    viPrintf (vi, strFreq.toAscii().data());
-    // allocate buffer
+    // static char buf [1000] = {0};
+    // qDebug() << "MeasurementStep: ns = " << ns << ", fi = " << fi;
+    if (fList.size() > 1 || ns == 0) {
+        QString strFreq = QString ("FREQ %1\n").arg(fList[fi]);
+        viPrintf (vi, strFreq.toAscii().data());
+        // allocate buffer
+    }
     long DATA_BUFFER_SIZE = calculateBufferSize(fi);
-
     int e_code;
     e_code = cbALoadQueue (BOARD_NUM, _ChanArray, _GainArray, NUM_CHANNELS);
     if (e_code != 0) {
@@ -68,9 +69,12 @@ bool MeasurementThread::measureStep(int ns, int fi)
             cbWinBufFree(_data); return response;
     }
     long actualSamplingRate = sRList[fi];
-    viPrintf(vi, (ViString)"FREQ?\n");
-    /* Read results */
-    viScanf (vi, (ViString)"%t", &buf);
+
+//    if (fList.size() > 1 || ns == 0) {
+//        viPrintf(vi, (ViString)"FREQ?\n");
+//        /* Read results */
+//        viScanf (vi, (ViString)"%t", &buf);
+//    }
 
     //qDebug() << "Starting Scan";
     int startTime = LoggerTime::timer();

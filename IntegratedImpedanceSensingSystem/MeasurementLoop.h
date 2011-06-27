@@ -18,13 +18,16 @@
 #include "Measurement.h"
 #include "measurementprogdlg.h"
 #include "improbotexp.h"
+#include "singlefreqimpdlg.h"
 #include "AbstractMeasurementLoop.h"
 
 class MeasurementLoop: public AbstractMeasurementLoop {
 	Q_OBJECT
 public:
 	MeasurementLoop(ImpRobotExp *exp, QList<ImpedanceMeasurement> *);
-	void measure ();
+        MeasurementLoop(SingleFreqImpDlg *exp, QList<ImpedanceMeasurement> *);
+
+        void measure ();
 	virtual ~MeasurementLoop();
 
 protected:
