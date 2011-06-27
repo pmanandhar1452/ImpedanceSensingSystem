@@ -59,6 +59,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actImpRobotExp"/>
     <addaction name="separator"/>
     <addaction name="actionEIT_8_Electrodes"/>
+    <addaction name="actionContSingFreqImp"/>
    </widget>
    <addaction name="menu_Experiment"/>
   </widget>
@@ -71,6 +72,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionEIT_8_Electrodes">
    <property name="text">
     <string>EIT &amp;8 Electrodes</string>
+   </property>
+  </action>
+  <action name="actionContSingFreqImp">
+   <property name="text">
+    <string>Continuous Single Frequency Impedance Experiment</string>
    </property>
   </action>
  </widget>

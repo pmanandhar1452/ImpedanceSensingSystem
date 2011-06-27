@@ -13,23 +13,28 @@
 QList<double> FrequencyListGenerator::getFrequencies
 	(double start, double end, int steps, int type)
 {
-	if (start > end) {
-		double temp = start;
-		start = end;
-		end = temp;
-	}
-	QList<double> lst;
-	switch (type) {
-	case Global::LINEAR:
-		getFrequenciesLinear (start, end, steps, type, &lst);
-		return lst;
-	case Global::LOG:
-		getFrequenciesLog (start, end, steps, type, &lst);
-		return lst;
-	default:
-		getFrequenciesDecade (start, end, steps, type, &lst);
-		return lst;
-	}
+    QList<double> lst;
+    if (start == end || steps == 1)
+    {
+        lst.append(start);
+        return lst;
+    }
+    if (start > end) {
+            double temp = start;
+            start = end;
+            end = temp;
+    }
+    switch (type) {
+    case Global::LINEAR:
+            getFrequenciesLinear (start, end, steps, type, &lst);
+            return lst;
+    case Global::LOG:
+            getFrequenciesLog (start, end, steps, type, &lst);
+            return lst;
+    default:
+            getFrequenciesDecade (start, end, steps, type, &lst);
+            return lst;
+    }
 }
 
 void FrequencyListGenerator::getFrequenciesLinear(double start, double end,

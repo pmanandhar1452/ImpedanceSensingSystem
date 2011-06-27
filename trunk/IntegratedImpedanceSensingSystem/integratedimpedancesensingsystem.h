@@ -18,6 +18,7 @@ private:
 private slots:
     void newImpRobotExp();
     void newEIT8ElecExp();
+    void newContSingFreqImpExp();
 };
 
 #endif // INTEGRATEDIMPEDANCESENSINGSYSTEM_H
