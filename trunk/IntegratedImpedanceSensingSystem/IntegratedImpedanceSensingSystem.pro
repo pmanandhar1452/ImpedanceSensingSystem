@@ -7,10 +7,12 @@ CONFIG += console
 
 #PATH_SETTINGS_SET = COMPUTER_1
 #PATH_SETTINGS_SET = COMPUTER_2
-PATH_SETTINGS_SET = COMPUTER_3
+#PATH_SETTINGS_SET = COMPUTER_3
+PATH_SETTINGS_SET = COMPUTER_4
 
 contains ( PATH_SETTINGS_SET, COMPUTER_1) {
     QEXTSERIALPORT_PATH = "C:/Documents and Settings/Instrument/My Documents/PManandhar/qextserialport"
+    QEXTSERIALPORT_BUILD_PATH = $$QEXTSERIALPORT_PATH
     MCCDAQ_PATH = "C:/Program Files/Measurement Computing/DAQ/C"
     VISA_PATH   = "C:/Program Files/IVI Foundation/VISA/WinNT"
 }
@@ -28,6 +30,14 @@ contains ( PATH_SETTINGS_SET, COMPUTER_3) {
     MCCDAQ_PATH = "C:/Users/Public/Documents/Measurement Computing/DAQ/C"
     VISA_PATH   = "C:/Program Files/IVI Foundation/VISA/Win64"
 }
+
+contains ( PATH_SETTINGS_SET, COMPUTER_4) {
+    QEXTSERIALPORT_PATH = "C:/EclipseWorkspace/qextserialport"
+    QEXTSERIALPORT_BUILD_PATH = $$QEXTSERIALPORT_PATH
+    MCCDAQ_PATH = "C:/Program Files/Measurement Computing/DAQ/C"
+    VISA_PATH   = "C:/Program Files/IVI Foundation/VISA/WinNT"
+}
+
 
 LIBS        += $$QEXTSERIALPORT_BUILD_PATH/src/build/libqextserialportd1.a
 INCLUDEPATH += $$QEXTSERIALPORT_PATH/src
