@@ -18,13 +18,10 @@
 #include "FrequencyListGenerator.h"
 #include "MeasurementThread.h"
 
-MeasurementLoop::MeasurementLoop(ImpRobotExp * exp,
+MeasurementLoop::MeasurementLoop(AbstractExperimentDlg * exp,
 		QList<ImpedanceMeasurement>* pIM)
         :AbstractMeasurementLoop(exp, pIM) { }
 
-MeasurementLoop::MeasurementLoop(SingleFreqImpDlg * exp,
-                QList<ImpedanceMeasurement>* pIM)
-        :AbstractMeasurementLoop(exp, pIM) { }
 
 void MeasurementLoop::measure()
 {
@@ -34,7 +31,7 @@ void MeasurementLoop::measure()
 	totalSteps = FrequencyListGenerator::
 				getFrequencies().size() * g->getNumSweep();
 	pDlg.setMaximum(totalSteps);
-        MeasurementThread thread(this, (ImpRobotExp*)exp);
+        MeasurementThread thread(this, exp);
 	connect(&pDlg, SIGNAL(cancelled()), &thread, SLOT(cancel()));
 	connect(&thread, SIGNAL(updateProg()), this, SLOT(updateProg()));
 	connect(&thread, SIGNAL(finishProg()), this, SLOT(finishProg()));

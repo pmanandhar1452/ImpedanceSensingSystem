@@ -17,7 +17,7 @@
 #include "LoggerTime.h"
 
 MeasurementThread::MeasurementThread
-		(MeasurementLoop * ml, ImpRobotExp * exp)
+                (MeasurementLoop * ml, AbstractExperimentDlg * exp)
 		: ml(ml), exp(exp), g(Global::instance()),
 		  cInfo(g->getChannelInformation()), iCal(cInfo)
 {

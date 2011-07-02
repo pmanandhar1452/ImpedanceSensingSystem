@@ -6,6 +6,7 @@
 #include <cbw.h>
 
 #include "Global.h"
+#include "abstractexperimentdlg.h"
 #include "Measurement.h"
 #include "ChannelInformation.h"
 
@@ -13,7 +14,7 @@ namespace Ui {
     class eit8electrodedlg;
 }
 
-class EIT8ElectrodeDlg : public QDialog
+class EIT8ElectrodeDlg : public AbstractExperimentDlg
 {
     Q_OBJECT
 
@@ -30,7 +31,6 @@ public:
     static const int N_ELECTRODES_ACTIVE = 8;
     static const ChannelInformation::DAQ_SCALING V_MAX = ChannelInformation::DAQPM_500mV;
 
-    QList<ImpedanceMeasurement> * getImpMeasurement();
     QVector<ChannelInformation> getChannelInformation ();
 
 private:
@@ -40,7 +40,6 @@ private:
     QVector<ChannelInformation> cI;
 
     QString dirPath;
-    QList<ImpedanceMeasurement> impMsmt;
 
     bool writeSettings ();
     void writeDataToFiles ();

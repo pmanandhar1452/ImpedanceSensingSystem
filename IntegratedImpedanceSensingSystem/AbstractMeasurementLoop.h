@@ -9,10 +9,9 @@
 #define ABSTRACTMEASUREMENTLOOP_H
 
 #include <QObject>
-
-#include <QDialog>
 #include <QList>
 
+#include "abstractexperimentdlg.h"
 #include "Measurement.h"
 #include "measurementprogdlg.h"
 
@@ -20,7 +19,7 @@ class AbstractMeasurementLoop : public QObject
 {
     Q_OBJECT
 public:
-    explicit AbstractMeasurementLoop(QDialog *exp, QList<ImpedanceMeasurement> *);
+    explicit AbstractMeasurementLoop(AbstractExperimentDlg *exp, QList<ImpedanceMeasurement> *);
     virtual void measure () = 0;
     virtual ~AbstractMeasurementLoop();
 
@@ -42,7 +41,7 @@ protected:
     int totalSteps;
 
     MeasurementProgDlg pDlg;
-    QDialog * exp;
+    AbstractExperimentDlg * exp;
     QList<ImpedanceMeasurement> * pIM;
 
 };

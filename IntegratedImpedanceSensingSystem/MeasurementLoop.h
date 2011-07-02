@@ -17,15 +17,13 @@
 #include "Global.h"
 #include "Measurement.h"
 #include "measurementprogdlg.h"
-#include "improbotexp.h"
-#include "singlefreqimpdlg.h"
+#include "abstractexperimentdlg.h"
 #include "AbstractMeasurementLoop.h"
 
 class MeasurementLoop: public AbstractMeasurementLoop {
 	Q_OBJECT
 public:
-	MeasurementLoop(ImpRobotExp *exp, QList<ImpedanceMeasurement> *);
-        MeasurementLoop(SingleFreqImpDlg *exp, QList<ImpedanceMeasurement> *);
+        MeasurementLoop(AbstractExperimentDlg *exp, QList<ImpedanceMeasurement> *);
 
         void measure ();
 	virtual ~MeasurementLoop();

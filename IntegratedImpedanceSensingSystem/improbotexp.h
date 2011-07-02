@@ -5,11 +5,12 @@
 #include <QResizeEvent>
 #include <QCheckBox>
 #include "ui_improbotexp.h"
+#include "abstractexperimentdlg.h"
 #include "Measurement.h"
 #include "RobotControl.h"
 #include "Global.h"
 
-class ImpRobotExp : public QDialog
+class ImpRobotExp : public AbstractExperimentDlg
 {
     Q_OBJECT
 
@@ -18,7 +19,6 @@ public:
     ~ImpRobotExp();
 
     QString getDirPath();
-    QList<ImpedanceMeasurement> * getImpMeasurement();
 
 protected:
     virtual void resizeEvent(QResizeEvent * event);
@@ -76,7 +76,6 @@ private:
 	void writeMATLABCode();
 
 	QList<PositionMeasurement>  posMsmt;
-	QList<ImpedanceMeasurement> impMsmt;
 
 	QString dirPath;
 
