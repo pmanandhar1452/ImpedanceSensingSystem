@@ -55,7 +55,7 @@ void MeasurementThread::run() {
 bool MeasurementThread::measureStep(int ns, int fi)
 {
     // static char buf [1000] = {0};
-    qDebug() << "MeasurementStep: ns = " << ns << ", fi = " << fi;
+    //qDebug() << "MeasurementStep: ns = " << ns << ", fi = " << fi;
     if (fList.size() > 1 || ns == 0) {
         QString strFreq = QString ("FREQ %1\n").arg(fList[fi]);
         viPrintf (vi, strFreq.toAscii().data());
@@ -76,23 +76,23 @@ bool MeasurementThread::measureStep(int ns, int fi)
 //        viScanf (vi, (ViString)"%t", &buf);
 //    }
 
-    qDebug() << "Starting Scan. Requested fs = " << actualSamplingRate;
+    //qDebug() << "Starting Scan. Requested fs = " << actualSamplingRate;
     int startTime = LoggerTime::timer();
     e_code = cbAInScan (BOARD_NUM, 0, 15, DATA_BUFFER_SIZE, &actualSamplingRate,
                             _GainArray[0], _data, CONVERTDATA + DMAIO);
     int endTime = LoggerTime::timer();
-    qDebug() << "Ending Scan. Actual fs = " << actualSamplingRate;
+    //qDebug() << "Ending Scan. Actual fs = " << actualSamplingRate;
     if (e_code != 0) {
             bool response = createSweepErrorMsg(ns, fi, "Error in cbInScan()");
             cbWinBufFree(_data); return response;
     }
     ImpedanceMeasurement m = iCal.processData((WORD*)_data,
                     DATA_BUFFER_SIZE, fList[fi], actualSamplingRate);
-    qDebug() << "Finished Impedance Measurement";
+    //qDebug() << "Finished Impedance Measurement";
 
     m.t = (startTime + endTime)/2;
     pMLst->append(m);
-    qDebug() << "Appended Impedance Measurement";
+    //qDebug() << "Appended Impedance Measurement";
     return true;
 }
 
@@ -129,7 +129,7 @@ long MeasurementThread::calculateBufferSize (int fi)
 {
 	double TOTAL_TIME = ((double)cyclesPerIm)/fList[fi];
         long bsize = ceil(TOTAL_TIME*sRList[fi]*NUM_CHANNELS);
-        qDebug() << "Total Time: " << TOTAL_TIME << ", Buffer size: " << bsize;
+        //qDebug() << "Total Time: " << TOTAL_TIME << ", Buffer size: " << bsize;
         return bsize;
 }
 
