@@ -7,13 +7,14 @@
 #include <QDoubleSpinBox>
 
 #include "Global.h"
+#include "abstractexperimentdlg.h"
 #include "Measurement.h"
 
 namespace Ui {
     class SingleFreqImpDlg;
 }
 
-class SingleFreqImpDlg : public QDialog
+class SingleFreqImpDlg : public AbstractExperimentDlg
 {
     Q_OBJECT
 

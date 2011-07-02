@@ -21,7 +21,7 @@
 #include "eitmeasurementloop.h"
 
 EIT8ElectrodeDlg::EIT8ElectrodeDlg(QWidget *parent) :
-    QDialog(parent),
+    AbstractExperimentDlg(parent),
     ui(new Ui::eit8electrodedlg), cI(N_ELECTRODES + 1)
 {
     ui->setupUi(this);
@@ -220,11 +220,6 @@ double EIT8ElectrodeDlg::getTotalTime()
     return getCycleTime()*ui->spnExpCycles->value();
 }
 
-
-QList<ImpedanceMeasurement> * EIT8ElectrodeDlg::getImpMeasurement()
-{
-        return &impMsmt;
-}
 
 QVector<ChannelInformation> EIT8ElectrodeDlg::getChannelInformation() {
     return cI;

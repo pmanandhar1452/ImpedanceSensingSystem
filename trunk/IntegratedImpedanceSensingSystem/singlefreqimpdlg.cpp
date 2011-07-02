@@ -18,7 +18,7 @@
 #include "MeasurementLoop.h"
 
 SingleFreqImpDlg::SingleFreqImpDlg(QWidget *parent) :
-    QDialog(parent),
+    AbstractExperimentDlg(parent),
     ui(new Ui::SingleFreqImpDlg)
 {
     ui->setupUi(this);

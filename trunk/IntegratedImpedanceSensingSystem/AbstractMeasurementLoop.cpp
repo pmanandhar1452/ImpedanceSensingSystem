@@ -7,7 +7,7 @@
 
 #include "AbstractMeasurementLoop.h"
 
-AbstractMeasurementLoop::AbstractMeasurementLoop(QDialog * exp,
+AbstractMeasurementLoop::AbstractMeasurementLoop(AbstractExperimentDlg * exp,
                 QList<ImpedanceMeasurement>* pIM)
         :exp(exp), pIM(pIM) { }
 

@@ -15,7 +15,7 @@
 #include "MeasurementLoop.h"
 
 ImpRobotExp::ImpRobotExp(QWidget *parent)
-    : QDialog(parent)
+    : AbstractExperimentDlg(parent)
 {
 	ui.setupUi(this);
 	global = Global::instance();
@@ -318,10 +318,6 @@ void ImpRobotExp::updateChannelsUI()
 	updateFreqUI();
 }
 
-QList<ImpedanceMeasurement> * ImpRobotExp::getImpMeasurement()
-{
-	return &impMsmt;
-}
 
 void ImpRobotExp::updateFreqUI()
 {

@@ -57,7 +57,8 @@ HEADERS += LoggerTime.h ImpedanceCalculator.h \
     eitmeasurementloop.h \
     AbstractMeasurementLoop.h \
     EITMeasurementThread.h \
-    singlefreqimpdlg.h
+    singlefreqimpdlg.h \
+    abstractexperimentdlg.h
 SOURCES += LoggerTime.cpp ImpedanceCalculator.cpp \
     RobotControl.cpp MeasurementThread.cpp ChannelInformation.cpp \
     improbotexp.cpp ExperimentSettings.cpp \
@@ -68,7 +69,8 @@ SOURCES += LoggerTime.cpp ImpedanceCalculator.cpp \
     eitmeasurementloop.cpp \
     AbstractMeasurementLoop.cpp \
     EITMeasurementThread.cpp \
-    singlefreqimpdlg.cpp
+    singlefreqimpdlg.cpp \
+    abstractexperimentdlg.cpp
 FORMS += improbotexp.ui \
     integratedimpedancesensingsystem.ui MeasurementProgDlg.ui \
     eit8electrodedlg.ui \

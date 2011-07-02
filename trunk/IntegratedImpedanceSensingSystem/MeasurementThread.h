@@ -10,14 +10,14 @@
 
 #include <QThread>
 
-#include "ImpRobotExp.h"
+#include "abstractexperimentdlg.h"
 #include "MeasurementLoop.h"
 #include "ImpedanceCalculator.h"
 
 class MeasurementThread: public QThread {
 	Q_OBJECT
 public:
-	MeasurementThread(MeasurementLoop *, ImpRobotExp *);
+        MeasurementThread(MeasurementLoop *, AbstractExperimentDlg *);
 	virtual ~MeasurementThread();
 
 public slots:
@@ -32,7 +32,7 @@ protected:
 
 private:
 	MeasurementLoop *ml;
-	ImpRobotExp *exp;
+        AbstractExperimentDlg *exp;
 	volatile bool canceled;
 
 	void *_data;
