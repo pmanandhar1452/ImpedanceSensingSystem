@@ -312,14 +312,6 @@ void SingleFreqImpDlg::writeMATLABCode()
         fileI.open(QIODevice::WriteOnly);
         QVector<ChannelInformation> cI = global->getChannelInformation();
         QString tStr = QString (
-                        "fid = fopen('Position.dat', 'r');\n"
-                        "pos = fread(fid, [2 inf], 'long');\n"
-                        "fclose(fid);\n"
-                        "if ~isempty(pos)\n"
-                        "   tp = pos(1,:)';\n"
-                        "   p = pos(2,:)';\n"
-                        "end\n"
-                        "clear pos;\n"
                         "fid = fopen('Impedance.dat', 'r');\n"
                         "imp = fread(fid, [%1 inf], 'double');\n"
                         "fclose(fid);\n"
