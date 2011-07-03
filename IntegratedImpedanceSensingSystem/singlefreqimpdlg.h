@@ -30,7 +30,6 @@ private:
     QVector<ChannelInformation> cI;
 
     QString dirPath;
-    QList<ImpedanceMeasurement> impMsmt;
 
     QCheckBox chkChn[Global::N_CHANNELS];
     QComboBox cmbChn[Global::N_CHANNELS];
