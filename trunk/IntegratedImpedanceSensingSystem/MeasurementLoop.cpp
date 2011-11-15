@@ -49,8 +49,39 @@ QString MeasurementLoop::getTimeRemainingDisplayText()
 	if (estimatedTimeRemaining > 60)
                 str += Global::toHrMinSec(estimatedTimeRemaining);
 	else
-		str += QString("%1 seconds").arg(estimatedTimeRemaining);
-	return str;
+                str += QString("%1 secs").arg(estimatedTimeRemaining);
+        QList<ImpedanceMeasurement> * msmt = exp->getImpMeasurement();
+        //qDebug() << "displaying remaining time";
+        Global *g = Global::instance();
+        if (!msmt->isEmpty()) {
+            ImpedanceMeasurement &last = msmt->last();
+            QVector<ChannelInformation> cI = g->getChannelInformation();
+            for (int i = 0; i < cI.size(); i++) {
+                switch(cI.value(i).Type) {
+                case ChannelInformation::CT_CARRIER:
+                   str += QString("\nVc = %1 V")
+                                   .arg(abs(last.X[i]));
+                   break;
+                case ChannelInformation::CT_IMPEDANCE:
+                   str += QString("\nZ = %1 + %2 i")
+                          .arg(last.X[i].real()).arg(last.X[i].imag());
+                   break;
+                case ChannelInformation::CT_HUMIDITY:
+                   str += QString("\nRH = %1\%")
+                          .arg(last.X[i].real());
+                   break;
+                case ChannelInformation::CT_TEMPERATURE:
+                case ChannelInformation::CT_TEMP_5V:
+                   str += QString("\nT = %1C")
+                          .arg(last.X[i].real());
+                   break;
+                case ChannelInformation::CT_DC_VOLTS:
+                case ChannelInformation::CT_AC_VOLTS:
+                            break;
+                }
+            }
+        }
+        return str;
 }
 
 MeasurementLoop::~MeasurementLoop() { }
